@@ -1,0 +1,275 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════
+   THEME VARIABLES
+   Each theme sets --bg, --surface, --elevated, --border,
+   --text, --muted, --accent, --accent2, --highlight, --danger.
+   Values are RGB triplets (space-separated) for Tailwind's
+   rgb(var(--x) / <alpha-value>) syntax.
+   ═══════════════════════════════════════════════════════════ */
+
+/* 1. Innila Dark (default) */
+:root,
+[data-theme="innila"] {
+  --bg:        10 10 15;
+  --surface:   18 18 26;
+  --elevated:  28 28 40;
+  --border:    38 38 58;
+  --text:      226 232 240;
+  --muted:     148 163 184;
+  --accent:    0 229 255;
+  --accent2:   255 107 157;
+  --highlight: 163 255 18;
+  --danger:    239 68 68;
+}
+
+/* 2. Oracle Redwood */
+[data-theme="redwood"] {
+  --bg:        26 10 12;
+  --surface:   42 16 20;
+  --elevated:  58 22 28;
+  --border:    90 32 40;
+  --text:      245 235 225;
+  --muted:     200 170 155;
+  --accent:    201 100 66;   /* burnt orange */
+  --accent2:   220 68 82;    /* crimson */
+  --highlight: 232 183 94;   /* redwood gold */
+  --danger:    200 30 30;
+}
+
+/* 3. Midnight Jazz */
+[data-theme="jazz"] {
+  --bg:        12 14 26;
+  --surface:   20 22 40;
+  --elevated:  30 34 58;
+  --border:    44 48 78;
+  --text:      230 232 245;
+  --muted:     150 158 190;
+  --accent:    108 168 255;
+  --accent2:   190 140 255;
+  --highlight: 250 190 90;   /* amber */
+  --danger:    230 80 80;
+}
+
+/* 4. Cyberpunk Neon */
+[data-theme="cyber"] {
+  --bg:        5 5 12;
+  --surface:   14 14 24;
+  --elevated:  24 24 40;
+  --border:    48 24 72;
+  --text:      235 240 255;
+  --muted:     150 140 180;
+  --accent:    0 255 220;    /* electric teal */
+  --accent2:   255 45 190;   /* hot magenta */
+  --highlight: 220 255 90;   /* toxic lime */
+  --danger:    255 60 100;
+}
+
+/* 5. Paper Light — newspaper + chessboard style */
+[data-theme="paper"] {
+  --bg:        237 231 220;   /* warm cream — the "newsprint" */
+  --surface:   252 250 245;   /* card — slightly whiter, like cut paper */
+  --elevated:  232 224 210;   /* pressed-paper grey for chips/inputs */
+  --border:    90 78 62;      /* STRONG ink border — like a printed rule */
+  --text:      28 24 20;      /* near-black ink */
+  --muted:     108 96 82;     /* faded brown-grey text */
+  --accent:    30 82 140;     /* newspaper blue (headlines) */
+  --accent2:   170 30 42;     /* red masthead red */
+  --highlight: 92 122 40;     /* forest green (sub-head) */
+  --danger:    180 30 30;
+}
+
+/* 6. Sunset Warmth */
+[data-theme="sunset"] {
+  --bg:        32 16 24;
+  --surface:   48 24 34;
+  --elevated:  68 34 48;
+  --border:    100 50 66;
+  --text:      250 235 230;
+  --muted:     205 165 160;
+  --accent:    255 140 90;    /* warm orange */
+  --accent2:   220 90 140;    /* rose */
+  --highlight: 255 200 120;   /* peach */
+  --danger:    230 70 90;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+
+html, body, #root { height: 100%; overflow: hidden; }
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-drag   { -webkit-app-region: drag; }
+.titlebar-nodrag { -webkit-app-region: no-drag; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.glass {
+  background: rgb(var(--surface) / 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgb(var(--border) / 0.5);
+}
+
+/* Knobs — dark variant */
+.knob {
+  background: radial-gradient(circle at 30% 20%,
+              rgb(var(--elevated)),
+              rgb(var(--bg)) 70%);
+  box-shadow: 0 8px 16px rgba(0,0,0,.6),
+              inset 0 -3px 6px rgba(255,255,255,.06),
+              inset 0 3px 6px rgba(0,0,0,.8);
+}
+
+/* Knobs — brass variant (used in Marshall) */
+.knob-brass {
+  background: radial-gradient(circle at 30% 20%, #e5c884, #a07d3a 60%, #4a3818 100%);
+  box-shadow: 0 8px 16px rgba(0,0,0,.6),
+              inset 0 -3px 6px rgba(255,255,255,.15),
+              inset 0 3px 6px rgba(0,0,0,.7);
+}
+
+/* Vinyl animation */
+@keyframes spin-vinyl { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.vinyl-spin { animation: spin-vinyl 4s linear infinite; }
+.vinyl-paused { animation-play-state: paused; }
+
+/* Tooltip fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+/* ═══════════════════════════════════════════════════════════
+   PAPER LIGHT — newspaper + chessboard refinements
+   Applied only when [data-theme="paper"]
+   ═══════════════════════════════════════════════════════════ */
+
+[data-theme="paper"] .innila-card {
+  /* Crisp paper edges — this is the "chessboard" rule */
+  border: 1.5px solid rgb(var(--border) / 0.85) !important;
+  background: rgb(var(--surface)) !important;
+  backdrop-filter: none !important;
+  /* Subtle paper texture: faint shadow like stacked newsprint */
+  box-shadow:
+    0 1px 0 rgb(var(--border) / 0.25),
+    0 2px 6px rgb(0 0 0 / 0.06),
+    inset 0 0 0 1px rgb(255 255 255 / 0.4);
+  border-radius: 6px !important;   /* newspaper = squarer corners */
+}
+
+/* Alternate tiles get a subtle grey tint — the chessboard effect */
+[data-theme="paper"] .innila-card:nth-child(odd) {
+  background: rgb(var(--surface)) !important;
+}
+[data-theme="paper"] .innila-card:nth-child(even) {
+  background: rgb(246 242 234) !important;
+}
+
+/* Chessboard pattern for grid layouts — 2-column and 3-column grids */
+[data-theme="paper"] .grid > .innila-card:nth-child(4n + 1),
+[data-theme="paper"] .grid > .innila-card:nth-child(4n + 4) {
+  background: rgb(var(--surface)) !important;
+}
+[data-theme="paper"] .grid > .innila-card:nth-child(4n + 2),
+[data-theme="paper"] .grid > .innila-card:nth-child(4n + 3) {
+  background: rgb(246 242 234) !important;
+}
+
+/* Newspaper serif headings */
+[data-theme="paper"] .innila-card-title {
+  font-family: 'Georgia', 'Times New Roman', serif !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  color: rgb(var(--text)) !important;
+  font-weight: 700 !important;
+}
+
+/* Newspaper-style masthead rule under card titles */
+[data-theme="paper"] .innila-card-header {
+  border-bottom: 2px solid rgb(var(--border) / 0.7) !important;
+  padding-bottom: 6px !important;
+}
+
+/* Make text pop in paper mode */
+[data-theme="paper"] body {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgb(0 0 0 / 0.015) 0px,
+      rgb(0 0 0 / 0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+
+/* Buttons in paper mode get crisper borders */
+[data-theme="paper"] button,
+[data-theme="paper"] .glass {
+  border: 1px solid rgb(var(--border) / 0.6) !important;
+}
+
+/* Inputs — like fill-in boxes on a form */
+[data-theme="paper"] input,
+[data-theme="paper"] textarea {
+  background: rgb(var(--surface)) !important;
+  border: 1.5px solid rgb(var(--border) / 0.6) !important;
+  color: rgb(var(--text)) !important;
+}
+
+[data-theme="paper"] input::placeholder,
+[data-theme="paper"] textarea::placeholder {
+  color: rgb(var(--muted) / 0.7) !important;
+}
+
+/* Neutralize the neon glow shadows in paper mode */
+[data-theme="paper"] .shadow-neon,
+[data-theme="paper"] [class*="shadow-\[0_0"] {
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08) !important;
+}
+
+/* Tab bar in paper mode — newspaper section dividers */
+[data-theme="paper"] nav {
+  border-bottom: 2px double rgb(var(--border) / 0.7) !important;
+}
+
+/* Keep scrollbars subtle in paper mode */
+[data-theme="paper"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+[data-theme="paper"] ::-webkit-scrollbar-thumb {
+  background: rgb(var(--border) / 0.4);
+  border-radius: 4px;
+}
+[data-theme="paper"] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* Tab bar — newspaper section tab look */
+[data-theme="paper"] nav > button {
+  font-family: 'Georgia', serif !important;
+  border: 1px solid transparent !important;
+}
+
+[data-theme="paper"] nav > button:hover {
+  border-color: rgb(var(--border) / 0.4) !important;
+  background: rgb(var(--elevated) / 0.5) !important;
+}
+
+[data-theme="paper"] nav > button.bg-highlight,
+[data-theme="paper"] nav > button[class*="bg-highlight"] {
+  border: 1.5px solid rgb(var(--border) / 0.9) !important;
+  box-shadow: 0 1px 0 rgb(var(--border) / 0.5) !important;
+}

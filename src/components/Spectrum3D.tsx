@@ -1,0 +1,1 @@
+export { PowerampBars as default } from './Visualizers';
